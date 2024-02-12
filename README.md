@@ -1,0 +1,2 @@
+# SebChan
+Next.js Imageboard
