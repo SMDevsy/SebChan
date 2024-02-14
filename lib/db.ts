@@ -67,4 +67,3 @@ function getMockBoards(): Board[] {
 }
 
 export const db: Board[] = getMockBoards();
-console.log(db);
