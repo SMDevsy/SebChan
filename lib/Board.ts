@@ -1,3 +1,4 @@
+import { Thread } from "./Thread";
 import { db } from "./db";
 
 export default interface Board {

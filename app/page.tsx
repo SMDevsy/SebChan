@@ -1,11 +1,11 @@
 import utilStyles from "../styles/utils.module.css";
 import Head from "next/head";
-import { siteTitle } from "./layout";
-import Board, { getBoards } from "../lib/Board";
+import Board from "../lib/Board";
 import Link from "next/link";
 import { db } from "../lib/db";
 
 const boards = db;
+const siteTitle = "SebChan";
 
 export default function HomePage() {
   return (

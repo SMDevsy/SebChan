@@ -1,22 +1,20 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2020": true
+  env: {
+    browser: true,
+    es2020: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "next/core-web-vitals",
+  ],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
-    ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 11,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-    }
+    ecmaVersion: 11,
+    sourceType: "module",
+  },
+  plugins: ["react"],
+  rules: {},
 };

@@ -1,4 +1,6 @@
-interface Thread {
+import { MakeOptional } from "./types";
+
+export interface Thread {
   author: string | null;
   title: string | null;
   content: string;
@@ -10,4 +12,4 @@ interface Thread {
 /**
 Thread, but with optional mediaId and without replies
 **/
-type Reply = Omit<MakeOptional<Thread, "mediaId">, "replies">;
+export type Reply = Omit<MakeOptional<Thread, "mediaId">, "replies">;

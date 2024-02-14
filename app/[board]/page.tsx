@@ -1,4 +1,5 @@
 import { getBoardThreads } from "../../lib/Board";
+import { Thread } from "../../lib/Thread";
 
 export default function Board({ params }: { params: { board: string } }) {
   console.log(params);

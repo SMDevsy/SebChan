@@ -5,6 +5,7 @@ For now it's mock data.
 
 import { LoremIpsum } from "lorem-ipsum";
 import Board from "./Board";
+import { Reply, Thread } from "./Thread";
 const lorem = new LoremIpsum();
 
 function dec2hex(dec: number): string {
@@ -30,7 +31,7 @@ function getRandomReply(): Reply {
 function getRandomReplies(num: number): Reply[] {
   return Array(num)
     .fill(null)
-    .map((_) => getRandomReply());
+    .map(() => getRandomReply());
 }
 
 function getRandomThread(): Thread {
