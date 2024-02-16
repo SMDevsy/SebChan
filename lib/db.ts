@@ -1,69 +1,44 @@
-/**
-Defines interface for fetching data from our remote DB.
-For now it's mock data.
- **/
+import { PrismaClient, Board, Reply, Thread } from "@prisma/client";
 
-import { LoremIpsum } from "lorem-ipsum";
-import Board from "./Board";
-import { Reply, Thread } from "./Thread";
-const lorem = new LoremIpsum();
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+export const prisma = globalForPrisma.prisma || new PrismaClient();
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
-function dec2hex(dec: number): string {
-  return dec.toString(16).padStart(2, "0");
+export async function getBoards(): Promise<Board[]> {
+  return await prisma.board.findMany();
 }
 
-function randStr(len: number): string {
-  let arr = new Uint8Array(len);
-  crypto.getRandomValues(arr);
-  return Array.from(arr, dec2hex).join("");
+export async function getBoardByTag(tag: string): Promise<Board> {
+  const board = await prisma.board.findFirstOrThrow({
+    where: { tag: tag },
+  });
+  return board;
 }
 
-function getRandomReply(): Reply {
-  return {
-    author: randStr(10),
-    title: randStr(20),
-    content: lorem.generateSentences(3),
-    createdAt: new Date(Date.now()),
-    mediaId: Math.random() > 0.4 ? randStr(5) : undefined,
-  };
+export async function getBoardThreads(board: Board): Promise<Thread[]> {
+  const threads = await prisma.thread.findMany({
+    where: { boardId: board.id },
+  });
+  return threads;
 }
 
-function getRandomReplies(num: number): Reply[] {
-  return Array(num)
-    .fill(null)
-    .map(() => getRandomReply());
+export async function getThreadReplies(threadId: string): Promise<Reply[]> {
+  const replies = await prisma.reply.findMany({
+    where: {
+      threadId: threadId,
+    },
+  });
+  return replies;
 }
 
-function getRandomThread(): Thread {
-  const numOfReplies = Math.floor(Math.random() * 10);
-  return {
-    author: randStr(10),
-    title: randStr(20),
-    content: lorem.generateSentences(3),
-    createdAt: new Date(Date.now()),
-    mediaId: randStr(5),
-    replies: getRandomReplies(numOfReplies),
-  };
+export async function addThread(thread: Thread) {
+  await prisma.thread.create({
+    data: thread,
+  });
 }
 
-function getRandomBoard(): Board {
-  const name = randStr(6);
-  const threads = Array(5)
-    .fill(null)
-    .map(() => getRandomThread());
-
-  return {
-    tag: name.substring(0, 3),
-    name: name,
-    description: lorem.generateSentences(1),
-    threads: threads,
-  };
+export async function addReply(reply: Reply) {
+  await prisma.reply.create({
+    data: reply,
+  });
 }
-
-function getMockBoards(): Board[] {
-  return Array(3)
-    .fill(null)
-    .map(() => getRandomBoard());
-}
-
-export const db: Board[] = getMockBoards();

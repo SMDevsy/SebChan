@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Board {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  description String
+  name        String
+  tag         String
+  threads     Thread[]
+}
+
+model Thread {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  author    String?
+  title     String?
+  content   String
+  mediaId   String
+  createdAt DateTime @default(now())
+  replies   Reply[]
+  Board     Board?   @relation(fields: [boardId], references: [id])
+  boardId   String?  @db.ObjectId
+}
+
+model Reply {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  author    String?
+  content   String
+  mediaId   String?
+  createdAt DateTime @default(now())
+  Thread    Thread?  @relation(fields: [threadId], references: [id])
+  threadId  String?  @db.ObjectId
+}

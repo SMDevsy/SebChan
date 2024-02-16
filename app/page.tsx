@@ -1,13 +1,13 @@
 import utilStyles from "../styles/utils.module.css";
 import Head from "next/head";
-import Board from "../lib/Board";
 import Link from "next/link";
-import { db } from "../lib/db";
+import { getBoards } from "../lib/db";
 
-const boards = db;
 const siteTitle = "SebChan";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const boards = await getBoards();
+
   return (
     <>
       <Head>
@@ -23,14 +23,13 @@ export default function HomePage() {
         <h2 className={utilStyles.headingLg}>Boards</h2>
       </section>
 
-      {boards.map((b: Board) => (
+      {boards.map((b) => (
         <>
           <h1>
             <Link key={b.tag} href={`/${b.tag}`}>
-              {b.tag + "\n"}
+              {b.name + "\n"}
             </Link>
           </h1>
-          <br />
         </>
       ))}
     </>

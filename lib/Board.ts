@@ -1,18 +1,9 @@
-import { Thread } from "./Thread";
-import { db } from "./db";
+// import { Thread } from "./Thread";
 
-export default interface Board {
-  tag: string;
-  name: string;
-  description: string;
-  threads: Thread[];
-}
-
-export function getBoards(): string[] {
-  return Object.keys(db);
-}
-
-export function getBoardThreads(tag: string): Thread[] {
-  const board = db.find((b: Board) => b.tag === tag);
-  return board?.threads ?? [];
-}
+// export default interface Board {
+//   id: string;
+//   tag: string;
+//   name: string;
+//   description: string;
+//   threads: Thread[];
+// }
