@@ -2,11 +2,12 @@ import utilStyles from "../styles/utils.module.css";
 import Head from "next/head";
 import Link from "next/link";
 import { getBoards } from "../lib/db";
+import { Board } from "@prisma/client";
 
 const siteTitle = "SebChan";
 
 export default async function HomePage() {
-  const boards = await getBoards();
+  const boards: Board[] = await getBoards();
 
   return (
     <>
@@ -16,7 +17,7 @@ export default async function HomePage() {
 
       <section className={utilStyles.headingMd}>
         <p>SebChan!</p>
-        <p> Homepage </p>
+        <p>Homepage</p>
       </section>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>

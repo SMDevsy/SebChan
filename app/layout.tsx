@@ -27,7 +27,7 @@ export default function Layout({ children }) {
           <header className={styles.header}>
             <Image
               priority
-              src="/images/jestbaza.png"
+              src="/jestbaza.png"
               className={utilStyles.borderCircle}
               height={144}
               width={144}
