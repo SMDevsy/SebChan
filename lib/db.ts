@@ -1,6 +1,6 @@
 import { PrismaClient, Board, Reply, Thread } from "@prisma/client";
 import { readdir } from "fs/promises";
-import path, { ParsedPath } from "path";
+import path from "path";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 export const prisma = globalForPrisma.prisma || new PrismaClient();
