@@ -6,6 +6,7 @@ import { addThread, getBoardByTag } from "../../lib/db";
 import { ObjectId } from "mongodb";
 import { extname } from "path";
 import { nanoid } from "nanoid";
+import { revalidatePath } from "next/cache";
 
 const maxMediaSize = 1024 * 1024 * 1; // 1MB;
 
@@ -56,7 +57,7 @@ export default async function submitThread(
 
   writeFileSync(path, buffer);
   await addThread(newThread);
-
+  revalidatePath("/");
   return {
     message: "",
   };

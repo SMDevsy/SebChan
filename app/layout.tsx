@@ -2,9 +2,18 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
+import { Metadata } from "next";
 
 const name = "SebChan";
 const siteTitle = "SebChan";
+
+export const metadata: Metadata = {
+  title: {
+    default: "SebChan",
+    template: "%s | SebChan",
+  },
+  description: "Your modern imageboard",
+};
 
 export default function Layout({ children }) {
   return (
@@ -12,6 +21,7 @@ export default function Layout({ children }) {
       <body>
         <div className={styles.container}>
           <Head>
+            <title>{siteTitle}</title>
             <link rel="icon" href="/favicon.ico" />
             <meta name="description" content="A modern imageboard" />
             <meta

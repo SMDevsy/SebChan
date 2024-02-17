@@ -3,6 +3,7 @@ import { getBoardByTag, getBoardThreads, getThreadReplies } from "../../lib/db";
 import { NewThreadForm } from "./NewThreadForm";
 import ThreadComponent from "./ThreadComponent";
 import ReplyCompontent from "./ReplyCompontent";
+import { Metadata } from "next";
 
 export default async function BoardDisplay({
   params,
@@ -37,4 +38,10 @@ export default async function BoardDisplay({
       ))}
     </>
   );
+}
+
+export async function generateMetadata({ params: { tag } }): Promise<Metadata> {
+  return {
+    title: tag,
+  };
 }
