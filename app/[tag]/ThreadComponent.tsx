@@ -3,7 +3,7 @@ import { Thread } from "@prisma/client";
 
 export default async function ThreadComponent(props: { thread: Thread }) {
   const thread = props.thread;
-  const mediaPath = `http://localhost:3000/api/images?mediaId=${thread.mediaId}`;
+  const mediaPath = `http://127.0.0.1:3000/api/images?mediaId=${thread.mediaId}`;
   return (
     <div>
       <h3>{thread.title}</h3>
