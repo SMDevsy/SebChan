@@ -1,17 +1,16 @@
 import { PrismaClient, Board, Reply, Thread } from "@prisma/client";
-import { readdirSync } from "fs";
+import { readdir } from "fs/promises";
+import path, { ParsedPath } from "path";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 export const prisma = globalForPrisma.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export async function getBoards(): Promise<Board[]> {
-  console.debug(`Fetching all boards`);
   return await prisma.board.findMany();
 }
 
 export async function getBoardByTag(tag: string): Promise<Board> {
-  console.debug(`Fetching board with tag ${tag}`);
   const board = await prisma.board.findFirstOrThrow({
     where: { tag: tag },
   });
@@ -19,7 +18,6 @@ export async function getBoardByTag(tag: string): Promise<Board> {
 }
 
 export async function getBoardThreads(board: Board): Promise<Thread[]> {
-  console.debug(`Fetching Threads for ${board.tag}`);
   const threads = await prisma.thread.findMany({
     where: { boardId: board.id },
   });
@@ -47,8 +45,8 @@ export async function addReply(reply: Reply) {
   });
 }
 
-export function getMediaPath(mediaId: string): string | null {
-  const files = readdirSync("public/images/");
-  const filename = files.find((filename) => filename.includes(mediaId));
-  return filename? `/images/${filename}` : null;
+export async function getMediaPath(mediaId: string): Promise<string | null> {
+  const files = (await readdir("public/images/")).map((f) => path.parse(f));
+  const filename = files.find((f) => f.name == mediaId);
+  return filename ? `public/images/${filename.base}` : null;
 }

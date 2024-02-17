@@ -15,10 +15,7 @@ export default async function submitThread(
 ): Promise<FormState> {
   // Check image size
   const image = formData.get("image") as File;
-  console.log(image.size);
-  console.log(image.name);
   const ext = extname(image.name);
-  console.log(ext);
 
   if (image.size > maxMediaSize) {
     console.error("Image too large");
@@ -53,7 +50,6 @@ export default async function submitThread(
     mediaId: nanoid(),
     boardId,
   };
-  console.log(newThread);
 
   const buffer = new Uint8Array(await image.arrayBuffer());
   const path = `public/images/${newThread.mediaId}${ext}`;
