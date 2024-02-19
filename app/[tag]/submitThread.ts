@@ -1,12 +1,12 @@
 "use server";
 import { writeFileSync } from "fs";
-import { FormState } from "./NewThreadForm";
 import { Thread } from "@prisma/client";
 import { addThread, getBoardByTag } from "../../lib/db";
 import { ObjectId } from "mongodb";
 import { extname } from "path";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
+import { FormState } from "../../components/FormConfig";
 
 const maxMediaSize = 1024 * 1024 * 1; // 1MB;
 

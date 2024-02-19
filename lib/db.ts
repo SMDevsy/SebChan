@@ -24,6 +24,19 @@ export async function getBoardThreads(board: Board): Promise<Thread[]> {
   return threads;
 }
 
+export async function getBoardOneThread(
+  board: Board,
+  threadId: string,
+): Promise<Thread | null> {
+  const thread = await prisma.thread.findUnique({
+    where: {
+      boardId: board.id,
+      id: threadId,
+    },
+  });
+  return thread;
+}
+
 export async function getThreadReplies(threadId: string): Promise<Reply[]> {
   const replies = await prisma.reply.findMany({
     where: {
