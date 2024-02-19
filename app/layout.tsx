@@ -4,6 +4,7 @@ import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import { Metadata } from "next";
 import Link from "next/link";
+import "./globals.css";
 
 const name = "SebChan";
 const siteTitle = "SebChan";
@@ -35,12 +36,12 @@ export default function Layout({ children }) {
             <meta name="twitter:card" content="summary_large_image" />
           </Head>
 
-          <header className={styles.header}>
+          <header className="flex flex-col items-center">
             <Link href={"/"}>
               <Image
                 priority
                 src="/jestbaza.png"
-                className={utilStyles.borderCircle}
+                className="rounded-full"
                 height={144}
                 width={144}
                 alt=""
