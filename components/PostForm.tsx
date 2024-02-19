@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import submitThread from "../app/[tag]/submitThread";
 import submitReply from "../app/[tag]/[threadId]/submitReply";
 import { FormState } from "./FormConfig";
+import FormInput from "./formInput";
 
 export type SubmitServerAction = (
   currentState: FormState,
@@ -63,24 +64,14 @@ export default function PostForm(props: {
         ) : (
           <></>
         )}
-        <div>
-          <label>Author </label>
-          <input type="text" name="author" required={false} />
-        </div>
 
-        <div>
-          <label>Title </label>
-          <input
-            type="text"
-            name="title"
-            required={props.formConfig.titleRequired}
-          />
-        </div>
-
-        <div>
-          <label>Content </label>
-          <textarea name="content" required={true} />
-        </div>
+        <FormInput label={"Author"} inputType={"input"} required={false} />
+        <FormInput
+          label={"Title"}
+          inputType={"input"}
+          required={props.formConfig.titleRequired}
+        />
+        <FormInput label={"Content"} inputType={"textarea"} required={true} />
 
         <div>
           <label>Image </label>

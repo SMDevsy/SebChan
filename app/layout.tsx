@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import { Metadata } from "next";
+import Link from "next/link";
 
 const name = "SebChan";
 const siteTitle = "SebChan";
@@ -35,14 +36,16 @@ export default function Layout({ children }) {
           </Head>
 
           <header className={styles.header}>
-            <Image
-              priority
-              src="/jestbaza.png"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt=""
-            />
+            <Link href={"/"}>
+              <Image
+                priority
+                src="/jestbaza.png"
+                className={utilStyles.borderCircle}
+                height={144}
+                width={144}
+                alt=""
+              />
+            </Link>
             <h1 className={utilStyles.heading2Xl}>{name}</h1>
           </header>
           {children}
