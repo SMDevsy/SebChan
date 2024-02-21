@@ -21,7 +21,7 @@ export default function Layout({ children }) {
   return (
     <html>
       <body>
-        <div className={styles.container}>
+        <div className="container px-2 mt-12 mb-24 md">
           <Head>
             <title>{siteTitle}</title>
             <link rel="icon" href="/favicon.ico" />
@@ -36,8 +36,8 @@ export default function Layout({ children }) {
             <meta name="twitter:card" content="summary_large_image" />
           </Head>
 
-          <header className="flex flex-col items-center">
-            <Link href={"/"}>
+          <header>
+            <Link href={"/"} className="flex flex-col items-center">
               <Image
                 priority
                 src="/jestbaza.png"
@@ -46,8 +46,8 @@ export default function Layout({ children }) {
                 width={144}
                 alt=""
               />
+              <h1 className="my-2 text-5xl font-bold">{name}</h1>
             </Link>
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
           </header>
           {children}
         </div>

@@ -8,12 +8,12 @@ export async function Boards() {
   return (
     <>
       {boards.map((b) => (
-        <>
+        <div className="mt-2">
           <Link key={b.tag} href={`/${b.tag}`}>
             {b.name}
             <br />
           </Link>
-        </>
+        </div>
       ))}
     </>
   );

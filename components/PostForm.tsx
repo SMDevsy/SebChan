@@ -74,7 +74,7 @@ export default function PostForm(props: {
         <FormInput label={"Content"} inputType={"textarea"} required={true} />
 
         <div>
-          <label>Image </label>
+          <label>Image: </label>
           <input
             type="file"
             name="image"
@@ -84,9 +84,11 @@ export default function PostForm(props: {
           />
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="my-3">
+          Submit
+        </button>
       </form>
-      <p aria-live="polite" className="sr-only" style={{ color: "red" }}>
+      <p aria-live="polite" className="text-red-500 sr-only">
         {state?.message}
       </p>
     </>
