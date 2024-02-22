@@ -1,23 +1,26 @@
 import { Thread } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-//import { getMediaPath } from "../../lib/db";
+import { getMediaUrl } from "../../lib/db";
 
 export default async function ThreadComponent(props: {
   thread: Thread;
   boardTag: string;
 }) {
   const thread = props.thread;
-  const mediaPath = `http://127.0.0.1:3000/api/images?mediaId=${thread.mediaId}`;
+  console.log(`Media ID = `, thread.mediaId);
+  const mediaUrl = getMediaUrl(thread.mediaId);
+  console.log(`Media URL = `, mediaUrl);
+  //const mediaPath = `http://127.0.0.1:3000/api/images?mediaId=${thread.mediaId}`;
   return (
     <div>
       <Link href={`/${props.boardTag}/${thread.id}`}>
         <h3>{thread.title}</h3>
       </Link>
-      {mediaPath ? (
+      {mediaUrl ? (
         <div style={{ position: "relative", width: "30%", height: "auto" }}>
           <Image
-            src={mediaPath}
+            src={mediaUrl}
             width={0}
             height={0}
             sizes="100vw"

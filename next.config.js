@@ -14,6 +14,9 @@ module.exports = {
         hostname: "sebchan.mmilek.pl",
         port: "3000",
       },
+      {
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
 };
