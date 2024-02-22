@@ -11,13 +11,13 @@ export default function HomePage() {
         <title>{siteTitle}</title>
       </Head>
 
-      <section className={utilStyles.headingMd}>
+      <section className="text-2xl">
         <p>SebChan!</p>
         <p>Homepage</p>
       </section>
 
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Boards</h2>
+      <section className="mt-8">
+        <h2 className="text-2xl">Boards</h2>
         <Boards />
       </section>
     </>
