@@ -1,6 +1,5 @@
 import { PrismaClient, Board, Reply, Thread } from "@prisma/client";
-import { readdir } from "fs/promises";
-import path from "path";
+import cloudinary from "./cloudinary";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 export const prisma = globalForPrisma.prisma || new PrismaClient();
@@ -58,8 +57,13 @@ export async function addReply(reply: Reply) {
   });
 }
 
-export async function getMediaPath(mediaId: string): Promise<string | null> {
-  const files = (await readdir("public/images/")).map((f) => path.parse(f));
-  const filename = files.find((f) => f.name == mediaId);
-  return filename ? `public/images/${filename.base}` : null;
+export function getMediaUrl(mediaId: string): string {
+  const url = cloudinary.url(mediaId, {
+    urlAnalytics: false,
+  });
+  console.log(`URL from Clodinary: `, url);
+  return url;
+  // const files = (await readdir("public/images/")).map((f) => path.parse(f));
+  // const filename = files.find((f) => f.name == mediaId);
+  //return filename ? `public/images/${filename.base}` : null;
 }

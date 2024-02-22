@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import {
   getBoardByTag,
   getBoardOneThread,
+  getMediaUrl,
   getThreadReplies,
 } from "../../../lib/db";
 import { Reply } from "@prisma/client";
@@ -23,9 +24,7 @@ export default async function ThreadFullComponent({
   if (!thread) {
     notFound();
   }
-
-  // thread is valid, so it has a valid mediaId
-  const mediaPath = `http://127.0.0.1:3000/api/images?mediaId=${thread.mediaId}`;
+  const mediaUrl = getMediaUrl(thread.mediaId);
 
   const replies = await getThreadReplies(thread.id);
   /**
@@ -46,7 +45,7 @@ export default async function ThreadFullComponent({
         <small>{thread.createdAt.toLocaleString()}</small>
         <div style={{ position: "relative", width: "100%", height: "auto" }}>
           <Image
-            src={mediaPath}
+            src={mediaUrl}
             width={0}
             height={0}
             sizes="100vw"
