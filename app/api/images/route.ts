@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getMediaPath } from "../../../lib/db";
+import { getMediaUrl } from "../../../lib/db";
 import path from "path";
 import { readFile } from "fs/promises";
 
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const imagePath = await getMediaPath(mediaId);
+  const imagePath = await getMediaUrl(mediaId);
   if (!imagePath) {
     return Response.json({ status: 404, message: "Not Found" });
   }
