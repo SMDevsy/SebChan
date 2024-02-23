@@ -51,8 +51,6 @@ export default async function submitThread(
     boardId,
   };
 
-  console.log(`GENERATED THREAD WITH MEDIAID = ${newThread.mediaId}`);
-
   const buffer = new Uint8Array(await image.arrayBuffer());
   //const path = `public/images/${newThread.mediaId}${ext}`;
   await new Promise((resolve, reject) => {

@@ -42,8 +42,6 @@ export default function PostForm(props: {
   initialState: FormState;
   formConfig: FormConfig;
 }) {
-  console.log(props);
-
   let [state, formAction] = useFormState(
     props.formConfig.submitAction,
     props.initialState,

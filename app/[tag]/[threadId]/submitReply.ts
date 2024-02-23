@@ -9,8 +9,6 @@ export default async function submitReply(
   formData: FormData,
 ): Promise<FormState> {
   // Check image size
-  console.log(formData);
-  console.log("submit reply");
   return {
     message: "Submitted Reply",
   };
