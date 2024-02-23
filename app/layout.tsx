@@ -36,19 +36,6 @@ export default function Layout({ children }) {
             <meta name="twitter:card" content="summary_large_image" />
           </Head>
 
-          <header>
-            <Link href={"/"} className="flex flex-col items-center">
-              <Image
-                priority
-                src="/jestbaza.png"
-                className="rounded-full"
-                height={144}
-                width={144}
-                alt=""
-              />
-              <h1 className="my-2 text-5xl font-bold">{name}</h1>
-            </Link>
-          </header>
           {children}
         </div>
       </body>
