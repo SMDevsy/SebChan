@@ -25,5 +25,4 @@
 //   mediaId: "mediaId",
 // };
 
-// console.log(newThread);
 // addThread(newThread);

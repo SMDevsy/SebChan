@@ -7,7 +7,7 @@ name: Check NextJs build
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["main", "dev"]
     
   # Runs on any open or reopened pull request
   pull_request:
@@ -29,6 +29,9 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: Default
+      url: https://github.com
     steps:
       - name: Checkout
         uses: actions/checkout@v4

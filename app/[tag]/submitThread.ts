@@ -1,14 +1,13 @@
 "use server";
-import { writeFileSync } from "fs";
-import { FormState } from "./NewThreadForm";
 import { Thread } from "@prisma/client";
 import { addThread, getBoardByTag } from "../../lib/db";
 import { ObjectId } from "mongodb";
-import { extname } from "path";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
+import { FormState } from "../../components/FormConfig";
+import cloudinary from "../../lib/cloudinary";
 
-const maxMediaSize = 1024 * 1024 * 1; // 1MB;
+const maxMediaSize = 1024 * 1024 * 4; // 4MB;
 
 export default async function submitThread(
   _currentState: FormState,
@@ -16,7 +15,7 @@ export default async function submitThread(
 ): Promise<FormState> {
   // Check image size
   const image = formData.get("image") as File;
-  const ext = extname(image.name);
+  //const ext = extname(image.name);
 
   if (image.size > maxMediaSize) {
     console.error("Image too large");
@@ -53,9 +52,24 @@ export default async function submitThread(
   };
 
   const buffer = new Uint8Array(await image.arrayBuffer());
-  const path = `public/images/${newThread.mediaId}${ext}`;
-
-  writeFileSync(path, buffer);
+  //const path = `public/images/${newThread.mediaId}${ext}`;
+  await new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          tags: [],
+          public_id: newThread.mediaId,
+        },
+        function (error, result) {
+          if (error) {
+            reject(error);
+            return;
+          }
+          resolve(result);
+        },
+      )
+      .end(buffer);
+  });
   await addThread(newThread);
   revalidatePath("/");
   return {

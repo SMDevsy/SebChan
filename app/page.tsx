@@ -1,38 +1,30 @@
+import Image from "next/image";
+import { Boards } from "../components/boards";
 import utilStyles from "../styles/utils.module.css";
 import Head from "next/head";
 import Link from "next/link";
-import { getBoards } from "../lib/db";
-import { Board } from "@prisma/client";
+import Logo from "../components/logo";
 
 const siteTitle = "SebChan";
 
-export default async function HomePage() {
-  const boards: Board[] = await getBoards();
-
+export default function HomePage() {
   return (
     <>
       <Head>
         <title>{siteTitle}</title>
       </Head>
 
-      <section className={utilStyles.headingMd}>
+      <Logo />
+
+      <section className="text-2xl">
         <p>SebChan!</p>
         <p>Homepage</p>
       </section>
 
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Boards</h2>
+      <section className="mt-8">
+        <h2 className="text-2xl">Boards</h2>
+        <Boards />
       </section>
-
-      {boards.map((b) => (
-        <>
-          <h1>
-            <Link key={b.tag} href={`/${b.tag}`}>
-              {b.name + "\n"}
-            </Link>
-          </h1>
-        </>
-      ))}
     </>
   );
 }

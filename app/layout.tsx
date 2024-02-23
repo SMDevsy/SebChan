@@ -3,6 +3,8 @@ import Image from "next/image";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import { Metadata } from "next";
+import Link from "next/link";
+import "./globals.css";
 
 const name = "SebChan";
 const siteTitle = "SebChan";
@@ -19,7 +21,7 @@ export default function Layout({ children }) {
   return (
     <html>
       <body>
-        <div className={styles.container}>
+        <div className="container px-2 mt-12 mb-24 md">
           <Head>
             <title>{siteTitle}</title>
             <link rel="icon" href="/favicon.ico" />
@@ -34,17 +36,6 @@ export default function Layout({ children }) {
             <meta name="twitter:card" content="summary_large_image" />
           </Head>
 
-          <header className={styles.header}>
-            <Image
-              priority
-              src="/jestbaza.png"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt=""
-            />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-          </header>
           {children}
         </div>
       </body>
