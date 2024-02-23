@@ -51,26 +51,41 @@ export default async function submitThread(
     boardId,
   };
 
-  const buffer = new Uint8Array(await image.arrayBuffer());
-  //const path = `public/images/${newThread.mediaId}${ext}`;
-  await new Promise((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream(
-        {
-          tags: [],
-          public_id: newThread.mediaId,
-        },
-        function (error, result) {
-          if (error) {
+  const buffer = await image.arrayBuffer();
+  var mime = image.type;
+  var encoding = "base64";
+  var base64Data = Buffer.from(buffer).toString("base64");
+  var fileUri = "data:" + mime + ";" + encoding + "," + base64Data;
+
+  try {
+    const uploadToCloudinary = () => {
+      return new Promise((resolve, reject) => {
+        cloudinary.uploader
+          .upload(fileUri, {
+            invalidate: true,
+            public_id: newThread.mediaId,
+          })
+          .then((result) => {
+            console.log(result);
+            resolve(result);
+          })
+          .catch((error) => {
+            console.log(error);
             reject(error);
-            return;
-          }
-          resolve(result);
-        },
-      )
-      .end(buffer);
-  });
+          });
+      });
+    };
+    await uploadToCloudinary();
+  } catch (error) {
+    console.log("server error", error);
+    return {
+      message: "Internal Server Error",
+    };
+  }
+
+  console.log(`uploaded picture`);
   await addThread(newThread);
+  console.log(`added thread`);
   revalidatePath("/");
   return {
     message: "",
