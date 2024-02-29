@@ -1,18 +1,24 @@
 "use client";
 
-import { useFormState } from "react-dom";
 import FormInput from "./formInput";
 import { submitThread } from "../lib/actions";
 import { FormState } from "../lib/types";
+import { useRef } from "react";
 
 export default function NewThreadForm(props: {
   boardTag: string;
   initialState: FormState;
 }) {
-  let [_, formAction] = useFormState(submitThread, props.initialState);
+  let ref = useRef<HTMLFormElement>(null);
   return (
     <div>
-      <form action={formAction}>
+      <form
+        action={async (formData) => {
+          await submitThread(formData);
+          ref.current?.reset();
+        }}
+        ref={ref}
+      >
         <FormInput label={"Author"} required={false}></FormInput>
         <FormInput label={"Title"} required={false}></FormInput>
         <FormInput label={"Content"} required={true}></FormInput>

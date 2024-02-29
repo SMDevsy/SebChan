@@ -6,16 +6,12 @@ import { revalidatePath } from "next/cache";
 import { maxMediaSize } from "./const";
 import { addReply, addThread, getBoardByTag, getThreadById } from "./db";
 import { uploadToCloudinary } from "./cloudinary";
-import { FormState } from "./types";
 
 /**
  * Submit a new Thread.
  * This can throw in many ways and should be handled by the caller
  **/
-export async function submitThread(
-  _currentState: FormState,
-  formData: FormData,
-): Promise<FormState> {
+export async function submitThread(formData: FormData) {
   // Check image size
   const image = formData.get("image") as File;
 
@@ -55,10 +51,7 @@ export async function submitThread(
   };
 }
 
-export async function submitReply(
-  _currentState: FormState,
-  formData: FormData,
-): Promise<FormState> {
+export async function submitReply(formData: FormData) {
   // Check image size
   const image = formData.get("image");
   if (image && (image as File).size > maxMediaSize) {
@@ -85,14 +78,13 @@ export async function submitReply(
     threadId,
   };
 
+  console.log(image);
   // Image is not null, so mediaId is also not null
-  if (image && newReply.mediaId) {
+  if ((image as File).size > 0 && newReply.mediaId) {
+    console.info("uploading image");
     await uploadToCloudinary(image as File, newReply.mediaId);
   }
   await addReply(newReply);
 
   revalidatePath("/[tag]/[threadId]", "page");
-  return {
-    message: "Submitted Reply",
-  };
 }

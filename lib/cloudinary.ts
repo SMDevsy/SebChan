@@ -14,6 +14,7 @@ export async function uploadToCloudinary(image: File, mediaId: string) {
   const encoding = "base64";
   const base64Data = Buffer.from(buffer).toString("base64");
   const fileUri = "data:" + mime + ";" + encoding + "," + base64Data;
+
   return new Promise((resolve, reject) => {
     cloudinary.uploader
       .upload(fileUri, {
