@@ -1,15 +1,9 @@
 import { Board, Reply, Thread } from "@prisma/client";
 import { getBoardByTag, getBoardThreads, getThreadReplies } from "../../lib/db";
-//import { NewThreadForm } from "./NewThreadForm.1";
 import ThreadComponent from "./ThreadComponent";
 import ReplyCompontent from "./ReplyCompontent";
+import NewThreadForm from "../../components/NewThreadForm";
 import { Metadata } from "next";
-import PostForm from "../../components/PostForm";
-import { FormConfigs, FormState } from "../../components/FormConfig";
-
-const initialState: FormState = {
-  message: "",
-};
 
 export default async function BoardDisplay({
   params,
@@ -29,15 +23,9 @@ export default async function BoardDisplay({
 
   let threadsWithReplies = await Promise.all(threadsWithRepliesPromises);
 
-  //<NewThreadForm tag={params.tag} />
   return (
     <>
-      <PostForm
-        tag={params.tag}
-        formConfig={FormConfigs.NewThread}
-        initialState={initialState}
-        threadId={null}
-      />
+      <NewThreadForm boardTag={params.tag} initialState={{ message: "" }} />
       <h2>{params.tag}</h2>
       <h4>Threads: {threads.length}</h4>
       {threadsWithReplies.map(({ thread, replies }) => (
