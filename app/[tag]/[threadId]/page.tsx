@@ -7,12 +7,8 @@ import {
   getThreadReplies,
 } from "../../../lib/db";
 import { Reply } from "@prisma/client";
-import PostForm from "../../../components/PostForm";
-import { FormConfigs, FormState } from "../../../components/FormConfig";
-
-const initialState: FormState = {
-  message: "",
-};
+import NewReplyForm from "../../../components/NewReplyForm";
+import ReplyCompontent from "../ReplyCompontent";
 
 export default async function ThreadFullComponent({
   params,
@@ -32,12 +28,7 @@ export default async function ThreadFullComponent({
   **/
   return (
     <div>
-      <PostForm
-        tag={params.tag}
-        threadId={params.threadId}
-        formConfig={FormConfigs.NewReply}
-        initialState={initialState}
-      />
+      <NewReplyForm threadId={thread.id} initialState={{ message: "" }} />
       <div>
         <h1>{thread.title ?? "Untitled"}</h1>
         <small>{thread.author}</small>
@@ -57,7 +48,7 @@ export default async function ThreadFullComponent({
       </div>
       <div>
         {replies.map((r: Reply) => (
-          <>{r.content}</>
+          <ReplyCompontent key={r.id} reply={r} />
         ))}
       </div>
     </div>

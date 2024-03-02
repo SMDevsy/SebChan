@@ -36,6 +36,14 @@ export async function getBoardOneThread(
   return thread;
 }
 
+export async function getThreadById(threadId: string): Promise<Thread> {
+  return await prisma.thread.findFirstOrThrow({
+    where: {
+      id: threadId,
+    },
+  });
+}
+
 export async function getThreadReplies(threadId: string): Promise<Reply[]> {
   const replies = await prisma.reply.findMany({
     where: {
